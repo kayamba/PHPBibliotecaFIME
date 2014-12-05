@@ -1,0 +1,23 @@
+# Lista de libros por conteo de mayor a menor por todos los libros
+SELECT productos.Titulo,(Select COUNT(*) as Cantidad From comix.pedidos WHERE pedidos.entregado=1 AND pedidos.IdProducto=productos.IdProducto) as Cantidades From comix.productos ORDER BY Cantidades DESC
+
+# Lista de libros por conteo de mayor a menor por los 10 primeros
+SELECT productos.Titulo,(Select COUNT(*) as Cantidad From comix.pedidos WHERE pedidos.entregado=1 AND pedidos.IdProducto=productos.IdProducto) as Cantidades From comix.productos ORDER BY Cantidades DESC LIMIT 10
+
+# Conteo de un libro que se haya rentado durante los 30 dias anteriores 
+Select COUNT(*) as Cantidad, NOW() as AHORA, NOW()- INTERVAL 30 DAY as MES From comix.pedidos WHERE pedidos.entregado=1 AND pedidos.IdProducto=7 AND pedidos.fecha_renta BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW()
+
+# Top Ten de los ultimos 30 dias
+SELECT productos.Titulo,(Select COUNT(*) as Cantidad From comix.pedidos WHERE pedidos.entregado=1 AND pedidos.IdProducto=productos.IdProducto AND pedidos.fecha_renta BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW()) as Cantidades From comix.productos ORDER BY Cantidades DESC LIMIT 10
+
+# Top Ten de los ultimos 365 dias
+SELECT productos.Titulo,(Select COUNT(*) as Cantidad From comix.pedidos WHERE pedidos.entregado=1 AND pedidos.IdProducto=productos.IdProducto AND pedidos.fecha_renta BETWEEN (NOW() - INTERVAL 365 DAY) AND NOW()) as Cantidades From comix.productos ORDER BY Cantidades DESC LIMIT 10
+
+# Cantidad de Libros en renta
+SELECT COUNT(*) AS Rentados FROM `pedidos` WHERE pedidos.entregado = 1 AND IdProducto = 9
+
+# Trae existencia
+SELECT disponibilidad FROM `productos` WHERE IdProducto = 9 
+
+# Checa si se puede rentar
+SELECT (productos.disponibilidad > (SELECT COUNT(*) AS Rentados FROM `pedidos` WHERE pedidos.entregado = 1 AND IdProducto = 9)) AS Rentar FROM `productos` WHERE IdProducto = 9
