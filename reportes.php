@@ -11,6 +11,10 @@ $year = TopTenYear();
 $feitosmonth = FeitosMonth();
 $feitosyear = FeitosYear();
 
+$proximos = ProximosVencidos();
+$hoy = VencidosHoy();
+$retrasados = Retrasados();
+
 
 ?>
 <html>
@@ -19,6 +23,7 @@ $feitosyear = FeitosYear();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- CSS de Bootstrap -->
   <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css" media="screen" charset="utf-8">
   <!-- librerias opcionales que activan el soporte de html5 en IE8-->
   <!--[if lt IE 9]-->
   <script src="js/html5shiv.js"></script>
@@ -94,7 +99,94 @@ $feitosyear = FeitosYear();
   <div class="container">
     <div class="row show-grid">
       <div class="row">
+        <!--Iteracion en PHP  -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h3>Retrasados</h3>
+          <table class="table table-responsive table-hover table-borderer sort">
+            <thead>
+              <th>Titulo</th>
+              <th>Cliente</th>
+              <th>Telefono</th>
+              <th>Correo</th>
+              <th>Fecha Entrega</th>
+              <th>Dias en Prestamo</th>
+            </thead>
+            <tbody>
+              <?php while($row = $retrasados->fetch_assoc()){ ?>
+                <tr>
+                  <td><?php echo $row["Titulo"] ?></td>
+                  <td><?php echo $row["full_name"] ?></td>
+                  <td><?php echo $row["telefono"] ?></td>
+                  <td><?php echo $row["correo"] ?></td>
+                  <td><?php echo $row["fecha_entrega"] ?></td>
+                  <td><?php echo $row["rentado"] ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+          <!-- Fin de Iteraciones -->
+        </div>
+        <div class="row">
+          <!--Iteracion en PHP  -->
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3>Vencen Hoy</h3>
+            <table class="table table-responsive table-hover table-borderer sort">
+              <thead>
+                <th>Titulo</th>
+                <th>Cliente</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th>Fecha Entrega</th>
+                <th>Dias en Prestamo</th>
+              </thead>
+              <tbody>
+                <?php while($row = $hoy->fetch_assoc()){ ?>
+                  <tr>
+                    <td><?php echo $row["Titulo"] ?></td>
+                    <td><?php echo $row["full_name"] ?></td>
+                    <td><?php echo $row["telefono"] ?></td>
+                    <td><?php echo $row["correo"] ?></td>
+                    <td><?php echo $row["fecha_entrega"] ?></td>
+                    <td><?php echo $row["rentado"] ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- Fin de Iteraciones -->
+          </div>
+          <div class="row">
+            <!--Iteracion en PHP  -->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <h3>Proximos a Vencer</h3>
+              <table class="table table-responsive table-hover table-borderer sort">
+                <thead>
+                  <th>Titulo</th>
+                  <th>Cliente</th>
+                  <th>Telefono</th>
+                  <th>Correo</th>
+                  <th>Fecha Entrega</th>
+                  <th>Dias en Prestamo</th>
+                </thead>
+                <tbody>
+                  <?php while($row = $proximos->fetch_assoc()){ ?>
+                    <tr>
+                      <td><?php echo $row["Titulo"] ?></td>
+                      <td><?php echo $row["full_name"] ?></td>
+                      <td><?php echo $row["telefono"] ?></td>
+                      <td><?php echo $row["correo"] ?></td>
+                      <td><?php echo $row["fecha_entrega"] ?></td>
+                      <td><?php echo $row["rentado"] ?></td>
+                    </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Fin de Iteraciones -->
 
+            </div>
+            <div class="row">
         <!--Iteracion en PHP  -->
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <h3>M&aacute;s Solicitados del Mes</h3>
@@ -151,6 +243,7 @@ $feitosyear = FeitosYear();
           <!-- Fin de Iteraciones -->
 
         </div>
+
 
         <div class="row">
 
@@ -218,10 +311,17 @@ $feitosyear = FeitosYear();
     <script src="http://code.jquery.com/jquery.js"></script>
     <!-- Todos los plugins JavaScript de Bootstrap (tambien puedes incluir archivos JavaScript individuales unicos plugins que utilices)-->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script type="text/javascript">
     $('.confirmation').on('click', function () {
       return confirm('Estas seguro de eliminar el comic del inventario?');
     });
+    </script>
+    <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      $('.sort').dataTable();
+    } );
     </script>
   </body>
   </html>

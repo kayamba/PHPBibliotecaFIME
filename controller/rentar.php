@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
     $query = "UPDATE `comix`.`pedidos` SET `fecha_renta`=NOW(), `entregado`='1' WHERE `IdPedido`='".$_GET["id"]."'";
     $conx->query($query);
     echo $query;
-    header("Location: ".$_SERVER["HTTP_REFERER"]);
+    header("Location: ".$_SERVER["HTTP_REFERER"]."&print=".$_GET['id']);
   }
   echo "Error, no se puede solicitar un libro si no es cliente";
 }

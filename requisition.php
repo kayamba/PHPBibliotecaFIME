@@ -33,6 +33,14 @@ if (isset($_GET["id"])) {
   <script src="js/html5shiv.js"></script>
   <script src="js/respond.min.js"></script>
   <!--[endif]-->
+  <?php if(isset($_GET['print'])) {
+    $url = "print.php?print=".$_GET['print'];
+    ?>
+    <script type="text/javascript">
+    var ticket = window.open('<?php echo $url ?>');
+    </script>
+    <?php
+  } ?>
 </head>
 <body>
   <div class="navbar navbar-inverse" role="navigation">
